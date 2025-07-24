@@ -7,6 +7,7 @@ import { useApiPost } from '@/composables/useApi.ts'
 import Button from '@/components/ui/Button.vue'
 import Input from '@/components/ui/Input.vue'
 import { useRouter } from 'vue-router'
+import Checkbox from '@/components/ui/Checkbox.vue'
 
 const isLoading = ref(false)
 const email = ref('')
@@ -40,8 +41,10 @@ const onSubmit = handleSubmit(async (values) => {
 
       useSetTokens(response)
     await router.push('/')
-  }catch (error) {
-    setFieldError('password', error._data?.message)
+  }catch (error: unknown) {
+    if (error?._data?.message)
+      setFieldError('password', error._data?.message)
+
     console.error(error)
   }finally {
     isLoading.value = false
@@ -96,54 +99,17 @@ const onSubmit = handleSubmit(async (values) => {
                         />
                       </div>
                     </div>
-                    <!-- Checkbox -->
-<!--                    <div class="flex items-center justify-between">-->
-<!--                      <div>-->
-<!--                        <label-->
-<!--                          for="keepLoggedIn"-->
-<!--                          class="flex items-center text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400"-->
-<!--                        >-->
-<!--                          <div class="relative">-->
-<!--                            <Input-->
-<!--                              v-model="keepLoggedIn"-->
-<!--                              type="checkbox"-->
-<!--                              id="keepLoggedIn"-->
-<!--                              class="sr-only"-->
-<!--                            />-->
-<!--                            <div-->
-<!--                              :class="-->
-<!--                                keepLoggedIn-->
-<!--                                  ? 'border-brand-500 bg-brand-500'-->
-<!--                                  : 'bg-transparent border-gray-300 dark:border-gray-700'-->
-<!--                              "-->
-<!--                              class="mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]"-->
-<!--                            >-->
-<!--                              <span :class="keepLoggedIn ? '' : 'opacity-0'">-->
-<!--                                <svg-->
-<!--                                  width="14"-->
-<!--                                  height="14"-->
-<!--                                  viewBox="0 0 14 14"-->
-<!--                                  fill="none"-->
-<!--                                  xmlns="http://www.w3.org/2000/svg"-->
-<!--                                >-->
-<!--                                  <path-->
-<!--                                    d="M11.6666 3.5L5.24992 9.91667L2.33325 7"-->
-<!--                                    stroke="white"-->
-<!--                                    stroke-width="1.94437"-->
-<!--                                    stroke-linecap="round"-->
-<!--                                    stroke-linejoin="round"-->
-<!--                                  />-->
-<!--                                </svg>-->
-<!--                              </span>-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                          Keep me logged in-->
-<!--                        </label>-->
-<!--                      </div>-->
+                    <div class="flex w-full items-center justify-between">
+                      <Checkbox
+                        v-model="keepLoggedIn"
+                        name="keepLoggedIn"
+                        label="Сохранить вход"
+                        size="sm"
+                      />
                       <router-link to="/reset-password" class="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400">
                         Забыли пароль?
                       </router-link>
-<!--                    </div>-->
+                    </div>
                       <Button :is-loading="isLoading" class="w-full">
                         Войти
                       </Button>
@@ -163,11 +129,9 @@ const onSubmit = handleSubmit(async (values) => {
         </div>
         <div class="relative items-center hidden w-full h-full lg:w-1/2 bg-brand-950 dark:bg-white/5 lg:grid">
           <div class="flex items-center justify-center z-1">
-            <div class="flex flex-col items-center max-w-xs">
-              <p class="text-center text-title-2xl text-gray-400 dark:text-white/60">
-                LocaFun sellers
-              </p>
-            </div>
+            <p class="text-center text-title-2xl text-gray-400 dark:text-white/60">
+              LocaFun <br/> sellers
+            </p>
           </div>
         </div>
       </div>

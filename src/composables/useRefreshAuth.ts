@@ -9,7 +9,7 @@ export interface AuthJwt {
   refreshTokenExpire: number
 }
 
-export async function useRefreshToken() {
+export async function useRefreshToken(): Promise<AuthJwt> {
   const refreshToken = getCookie('refreshToken')
 
   return useApiPost<AuthJwt>('/api/auth/refresh', {

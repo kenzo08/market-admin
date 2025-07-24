@@ -3,7 +3,7 @@ import { computed, resolveComponent } from 'vue'
 
 interface Props {
   size?: 'xs' |'sm' | 'md' | 'lg' | 'xl'
-  type?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' |'link' | 'info' | 'neutral' | 'accent'
+  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' |'link' | 'info' | 'neutral' | 'accent'
   isActive?: boolean
   isOutline?: boolean
   isLoading?: boolean
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(),{
-  type: 'primary',
+  variant: 'primary',
   size: 'md'
 })
 
@@ -35,15 +35,15 @@ const isLink = computed(() => {
           {'btn-md': size === 'md'},
           {'btn-lg': size === 'lg'},
           {'btn-xl': size === 'xl'},
-          {'btn-primary': type === 'primary'},
-          {'btn-secondary': type === 'secondary'},
-          {'btn-success': type === 'success'},
-          {'btn-warning': type === 'warning'},
-          {'btn-error': type === 'error'},
-          {'btn-link': type === 'link'},
-          {'btn-info': type === 'info'},
-          {'btn-neutral': type === 'neutral'},
-          {'btn-accent': type === 'accent'},
+          {'btn-primary': variant === 'primary'},
+          {'btn-secondary': variant === 'secondary'},
+          {'btn-success': variant === 'success'},
+          {'btn-warning': variant === 'warning'},
+          {'btn-error': variant === 'error'},
+          {'btn-link': variant === 'link'},
+          {'btn-info': variant === 'info'},
+          {'btn-neutral': variant === 'neutral'},
+          {'btn-accent': variant === 'accent'},
           {'btn-active': isActive},
           {'btn-outline': isOutline}
          ]">
@@ -52,7 +52,7 @@ const isLink = computed(() => {
         :class="[
           {'loading opacity-100 loading-spinner' : isLoading },
          {'opacity-0  pointer-events-none': !isLoading},
-         `text-${type}`
+         `text-${variant}`
          ]"
     />
     <div class="flex items-center gap-1" :class="{'opacity-0': isLoading }">

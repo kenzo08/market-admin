@@ -38,7 +38,7 @@ const router = createRouter({
           meta: { title: 'Мои предложения'},
         },
         {
-          path: '/preview-offer',
+          path: '/preview-offer/:id',
           name: 'PreviewOffer',
           component: () => import('../views/Offer/Preview.vue'),
           meta: { title: 'Предпросмотр'},
@@ -100,7 +100,7 @@ router.beforeEach(async (to, from, next) => {
         useSetTokens(data)
         isLogged.value = true
       } catch (error) {
-        console.error('Token refresh failed:', error?._data)
+        console.error('Token refresh failed:', error)
       }
     }
     isAuthInitialized = true

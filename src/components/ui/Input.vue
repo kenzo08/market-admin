@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import {useField} from 'vee-validate';
 import { toRef } from 'vue'
+import { formatPrice } from '@/utils'
 
 interface Props {
   name: string
   placeholder?: string
   size?: 'xs' |'sm' | 'md' | 'lg' | 'xl'
-  inputType?: 'email' | 'password' | 'tel' | 'text'
+  inputType?: 'email' | 'password' | 'tel' | 'text' | 'number' | 'price'
   type?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' |'link' | 'info' | 'neutral' | 'accent'
   leftIcon?: string
   rightIcon?: string
@@ -38,6 +39,9 @@ function onBlur(event: Event) {
 
 function onInput(event: Event) {
   handleChange(event)
+  if (props.inputType === 'price')
+   inputValue.value = formatPrice(inputValue.value as string)
+
   emit('input', event)
 }
 </script>
@@ -82,3 +86,15 @@ function onInput(event: Event) {
     </p>
   </div>
 </template>
+
+<style scoped>
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+</style>

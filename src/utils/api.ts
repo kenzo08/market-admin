@@ -3,7 +3,6 @@ import { useAuthStore } from '@/stores/auth.ts'
 import { storeToRefs } from 'pinia'
 import { useRefreshToken, useSetTokens } from '@/composables/useRefreshAuth.ts'
 import { jwtDecode, type JwtPayload } from 'jwt-decode'
-import router from '@/router'
 
 export const api = ofetch.create({
   baseURL: import.meta.env.VITE_API_URL,
